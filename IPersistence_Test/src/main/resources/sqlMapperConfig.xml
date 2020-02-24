@@ -1,0 +1,12 @@
+<configuration>
+
+    <datasoruce>
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/zf"/>
+        <property name="username" value="root"/>
+        <property name="password" value="123456"/>
+    </datasoruce>
+
+    <mapper value="userMapper.xml"/>
+
+</configuration>

@@ -1,0 +1,15 @@
+<mapper namespace="com.zf.dao.IUserDao">
+
+    <select id="findAll" resultType="com.zf.pojo.User">
+        select * from user
+    </select>
+
+    <select id="findByCondition" parameterType="com.zf.pojo.User" resultType="com.zf.pojo.User">
+        select * from user where id=#{id} and username=#{username}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from user where id=#{id}
+    </delete>
+
+</mapper>
