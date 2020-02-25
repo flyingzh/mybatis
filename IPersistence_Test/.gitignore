@@ -101,12 +101,6 @@ local.properties
 *.iml
 gen
 
-bocpay-dao/.classpath
 .project
-bocpay-service/.classpath
-bocpay-facade/.classpath
-bocpay-service-war/.classpath
-bocpay-service-war/WebContent/WEB-INF/.gitignore
-bocpay-eai/.classpath
 classes/
 
