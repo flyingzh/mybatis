@@ -56,6 +56,28 @@ public class SimpleExcutor implements  Excutor {
         return (List<E>) list;
     }
 
+    public Integer execute(Configuration configuration, MappedStatement mappedStatement, Object... args) throws SQLException, ClassNotFoundException, NoSuchFieldException, IllegalAccessException, InstantiationException, IntrospectionException, InvocationTargetException {
+        Connection connection = configuration.getDataSource().getConnection();
+        String sql = mappedStatement.getSql();
+        BoundSql boundSql = getBoundSql(sql);
+        List<ParameterMapping> parameterMappingList = boundSql.getParameterMappingList();
+        String parameterType = mappedStatement.getParameterType();
+        String resultType = mappedStatement.getResultType();
+        PreparedStatement preparedStatement = connection.prepareStatement(boundSql.getSqlText());
+        //设置参数
+        setParameters(preparedStatement,parameterMappingList,parameterType,args);
+
+        //执行insert update delete 操作，返回成功条数
+        int update = preparedStatement.executeUpdate();
+
+        //执行sql语句，返回true--失败  false--成功
+//        boolean execute = preparedStatement.execute();
+        preparedStatement.close();
+        connection.close();
+        return update;
+    }
+
+
     /**
      *  设置查询sql 参数
      * @param preparedStatement
@@ -96,9 +118,6 @@ public class SimpleExcutor implements  Excutor {
         return null;
     }
 
-
-
-
     /**
      *  解析sql
      * @param sql
@@ -114,4 +133,5 @@ public class SimpleExcutor implements  Excutor {
         boundSql.setParameterMappingList(parameterMappings);
         return boundSql;
     }
+
 }

@@ -1,5 +1,7 @@
 package com.zf.pojo;
 
+import com.zf.sqlsession.SqlType;
+
 /**
  * @author admin
  * @date 2020/2/22 19:47
@@ -11,6 +13,7 @@ public class MappedStatement {
     private String parameterType;
     private String resultType;
     private String sql;
+    private SqlType sqlType;
 
     public String getId() {
         return id;
@@ -42,5 +45,13 @@ public class MappedStatement {
 
     public void setSql(String sql) {
         this.sql = sql;
+    }
+
+    public SqlType getSqlType() {
+        return sqlType;
+    }
+
+    public void setSqlType(SqlType sqlType) {
+        this.sqlType = sqlType;
     }
 }

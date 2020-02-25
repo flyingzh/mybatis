@@ -7,6 +7,7 @@ import java.beans.IntrospectionException;
 import java.lang.reflect.*;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author admin
@@ -16,13 +17,15 @@ import java.util.List;
 public class DefaultSqlSession implements SqlSession{
 
     private Configuration configuration;
+    private Excutor simpleExcutor;
 
     public DefaultSqlSession(Configuration configuration) {
         this.configuration = configuration;
+        simpleExcutor = new SimpleExcutor();
     }
 
     public <E> List<E> selectList(String statmentId, Object... args) throws IllegalAccessException, IntrospectionException, InstantiationException, NoSuchFieldException, SQLException, InvocationTargetException, ClassNotFoundException {
-        Excutor simpleExcutor = new SimpleExcutor();
+//        Excutor simpleExcutor = new SimpleExcutor();
         MappedStatement statement = configuration.getMappedStatementMap().get(statmentId);
         List<Object> query = simpleExcutor.query(configuration, statement, args);
         return (List<E>) query;
@@ -51,10 +54,36 @@ public class DefaultSqlSession implements SqlSession{
                     List<Object> objects = selectList(statementId, args);
                     return objects;
                 }
-                return selectOne(statementId,args);
+                return executeType(statementId,args);
+//                return selectOne(statementId,args);
             }
         });
         return (T) instance;
+    }
+
+    private <T> T executeType(String statmentId, Object... args) throws IllegalAccessException, IntrospectionException, InstantiationException, NoSuchFieldException, SQLException, InvocationTargetException, ClassNotFoundException {
+        Map<String, MappedStatement> mappedStatementMap = configuration.getMappedStatementMap();
+        MappedStatement statement = mappedStatementMap.get(statmentId);
+        Object o = null;
+        switch (statement.getSqlType()){
+            case DELETE:
+                o = execute(configuration,statement,args);
+                break;
+            case INSERT:
+                o = execute(configuration,statement,args);
+                break;
+            case UPDATE:
+                o = execute(configuration,statement,args);
+                break;
+            case SELECT:
+                o = selectOne(statmentId, args);
+                break;
+        }
+        return (T) o;
+    }
+
+    private Integer execute(Configuration configuration,MappedStatement statement, Object... args) throws IllegalAccessException, IntrospectionException, InstantiationException, NoSuchFieldException, SQLException, InvocationTargetException, ClassNotFoundException {
+        return simpleExcutor.execute(configuration,statement,args);
     }
 
 }

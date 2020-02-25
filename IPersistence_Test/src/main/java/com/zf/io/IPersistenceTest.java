@@ -34,12 +34,36 @@ public class IPersistenceTest {
         List<User> all = userDao.findAll();
         System.out.println(all);
 
-        User users = new User();
-        users.setId(2);
-        users.setUsername("lisi");
-        User byCondition = userDao.findByCondition(users);
-        System.out.println(byCondition);
+    }
+
+    @Test
+    public void test2() throws Exception {
+        InputStream resourceAsStream = Resource.getResourceAsStream("sqlMapperConfig.xml");
+        SqlSessionFactory build = new SqlSessionFactoryBuilder().build(resourceAsStream);
+        SqlSession sqlSession = build.openSqlSession();
+
+        IUserDao userDao = sqlSession.getMapper(IUserDao.class);
+       /*
+       //测试更新
+       User user1 = new User();
+        user1.setId(4);
+        user1.setUsername("zhaoliu2");
+        Integer integer = userDao.updateById(user1);
+        System.out.println(integer);*/
+/*
+        //测试删除
+        User user2 = new User();
+        user2.setId(4);
+        Integer integer = userDao.deleteById(user2);
+        System.out.println(integer);*/
+        //测试新增
+        User user3 = new User();
+        user3.setId(5);
+        user3.setUsername("testinsert");
+        Integer integer = userDao.insert(user3);
+        System.out.println(integer);
 
     }
+
 
 }

@@ -42,4 +42,17 @@ public class UserDaoImpl implements IUserDao {
         return o;
     }
 
+    public Integer updateById(User user) {
+        return null;
+    }
+
+    public Integer deleteById(User user) {
+        return null;
+    }
+
+    public Integer insert(User user) {
+        return null;
+    }
+
+
 }

@@ -17,4 +17,6 @@ public interface Excutor {
 
     <E> List<E> query(Configuration configuration, MappedStatement mappedStatement,Object...args) throws SQLException, ClassNotFoundException, NoSuchFieldException, IllegalAccessException, InstantiationException, IntrospectionException, InvocationTargetException;
 
+    Integer execute(Configuration configuration, MappedStatement mappedStatement,Object...args) throws SQLException, ClassNotFoundException, NoSuchFieldException, IllegalAccessException, InstantiationException, IntrospectionException, InvocationTargetException;
+
 }

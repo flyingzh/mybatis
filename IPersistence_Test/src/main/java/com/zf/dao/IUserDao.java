@@ -20,5 +20,10 @@ public interface IUserDao {
 
     User findByCondition(User user) throws PropertyVetoException, DocumentException, IllegalAccessException, IntrospectionException, InstantiationException, NoSuchFieldException, SQLException, InvocationTargetException, ClassNotFoundException;
 
+    Integer updateById(User user);
+
+    Integer deleteById(User user);
+
+    Integer insert(User user);
 
 }
